@@ -1,20 +1,10 @@
-from flask import Flask, render_template, request,redirect
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime, timezone
+# app.py
+from flask import Flask, render_template, request, redirect
+from models import db, Todo
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
-db = SQLAlchemy(app)
-
-
-class Todo(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(200), nullable=False)
-    completed = db.Column(db.Integer, default=0)
-    created_at = db.Column(db.DateTime, default=datetime.now(timezone.utc))
-
-    def __repr__(self):
-        return '<Task %r' % self.id
+db.init_app(app)
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -27,8 +17,8 @@ def index():
             db.session.commit()
             return redirect('/')
         except:
-            return 'There was an issue adding task'
-        
+            return 'There was an issue adding your task'
+
     else:
         tasks = Todo.query.order_by(Todo.created_at).all()
         return render_template('home.html', tasks=tasks)
@@ -36,13 +26,13 @@ def index():
 @app.route('/delete/<int:id>')
 def delete(id):
     task_to_delete = Todo.query.get_or_404(id)
-    
+
     try:
         db.session.delete(task_to_delete)
         db.session.commit()
         return redirect('/')
     except:
-        return 'There was an issue delete the task of '+task_to_delete.content
+        return 'There was an issue deleting the task'
 
 @app.route('/edit/<int:id>', methods=['GET', 'POST'])
 def edit(id):
@@ -53,20 +43,20 @@ def edit(id):
             db.session.commit()
             return redirect('/')
         except:
-            return 'There was an issue update the task of '+task.content
+            return 'There was an issue updating the task'
     else:
         return render_template('update.html', task=task)
 
 @app.route('/complete/<int:id>')
 def complete(id):
-    task_to_delete = Todo.query.get_or_404(id)
+    task_to_complete = Todo.query.get_or_404(id)
 
     try:
-        task_to_delete.completed = 1
+        task_to_complete.completed = 1
         db.session.commit()
         return redirect('/')
     except:
-        return 'There was an issue delete the task of '+task_to_delete.content
+        return 'There was an issue completing the task'
 
 if __name__ == "__main__":
     app.run(debug=True)
