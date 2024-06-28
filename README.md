@@ -71,12 +71,15 @@ This is a simple TODO application built using Python with the Flask framework. T
 ## API Endpoints
 
 - `GET /` - Retrieve all TODO items.
-- `GET /<id>` - Retrieve a specific TODO item by ID.
+- `GET /task/<id>` - Retrieve a specific TODO item by ID.
 - `POST /` - Create a new TODO item.
-- `POST /edit/<id>` - Update an existing TODO item by ID.
+- `POST /task/<id>` - Update an existing TODO item by ID.
 - `POST /complete/<id>` - Complete an existing TODO item by ID.
 - `DELETE /delete/<id>` - Delete a TODO item by ID.
 
-## License
+## Example
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+![Home Page](result/home.png)
+![List Data](result/add-list.png)
+![Edit Page](result/edit-page.png)
+![Completed Page](result/completed.png)

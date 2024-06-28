@@ -41,7 +41,7 @@ Home page
                         </td>
                         
                             <td>
-                                <a href="/edit/{{ task.id }}" class="btn btn-primary btn-sm {% if task.completed == 1 %} disabled {% endif %}" data-toggle="tooltip" title="Edit Task"{% if task.completed == 1 %} aria-disabled="true" tabindex="-1"{% endif %}><i class="fas fa-pencil-alt"></i></a>
+                                <a href="/task/{{ task.id }}" class="btn btn-primary btn-sm {% if task.completed == 1 %} disabled {% endif %}" data-toggle="tooltip" title="Edit Task"{% if task.completed == 1 %} aria-disabled="true" tabindex="-1"{% endif %}><i class="fas fa-pencil-alt"></i></a>
 
                                 <a href="/delete/{{ task.id }}" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Delete Task"><i class="fas fa-trash"></i></a>
                                 <a href="/complete/{{ task.id }}" class="btn btn-success btn-sm {% if task.completed == 1 %} disabled {% endif %}" data-toggle="tooltip" title="Set Complete" {% if task.completed == 1 %} aria-disabled="true" tabindex="-1"{% endif %}><i class="fas fa-check"></i></a>
