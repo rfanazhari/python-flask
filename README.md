@@ -53,7 +53,13 @@ This is a simple TODO application built using Python with the Flask framework. T
     python app.py
     ```
 
-2. **Open your browser and navigate to:**
+2. **Run the Todo Application with docker:**
+    <br/> Ensure you have install `docker` and `docker-compose`
+    ```sh
+    docker-compose up -d
+    ```
+
+3. **Open your browser and navigate to:**
 
     ```
     http://127.0.0.1:5000/
