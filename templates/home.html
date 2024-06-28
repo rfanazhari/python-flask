@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block head %}
+Home page
+{% endblock %}
+
+{% block body %}
+<div class="content">
+    <h2>Task list</h2>
+    <div class="w-100">
+        <form action="/" method="post" class="form-inline mb-3">
+            <div class="input-group w-100">
+                <input type="text" class="form-control" id="content" name="content" placeholder="Task Content">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Add Task</button>
+                </div>
+            </div>
+        </form>
+        {% if tasks|length < 1 %}
+            <p>There no tasks. Please add something new!</p>
+        {% else %}
+            <table class="table table-striped w-100">
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Added</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                        <tr>
+                            <td>{{ task.content }}</td>
+                            <td>{{ task.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                            <td>{% if task.completed == 1 %}
+                                <span class="badge badge-success">Completed</span>
+                            {% else %}
+                                <span class="badge badge-secondary">Pending</span>
+                            {% endif %}
+                        </td>
+                        
+                            <td>
+                                <a href="/edit/{{ task.id }}" class="btn btn-primary btn-sm {% if task.completed == 1 %} disabled {% endif %}" data-toggle="tooltip" title="Edit Task"{% if task.completed == 1 %} aria-disabled="true" tabindex="-1"{% endif %}><i class="fas fa-pencil-alt"></i></a>
+
+                                <a href="/delete/{{ task.id }}" class="btn btn-danger btn-sm" data-toggle="tooltip" title="Delete Task"><i class="fas fa-trash"></i></a>
+                                <a href="/complete/{{ task.id }}" class="btn btn-success btn-sm {% if task.completed == 1 %} disabled {% endif %}" data-toggle="tooltip" title="Set Complete" {% if task.completed == 1 %} aria-disabled="true" tabindex="-1"{% endif %}><i class="fas fa-check"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Memuat Script untuk Aktivasi Tooltip -->
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+{% endblock %}
